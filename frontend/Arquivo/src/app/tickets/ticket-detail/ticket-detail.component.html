@@ -1,0 +1,132 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card p-fluid">
+      <h5>{{ ticketId ? "Editar Ticket" : "Criar Novo Ticket" }}</h5>
+      <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+        <div class="grid p-fluid">
+          <div class="col-4">
+            <div class="field">
+              <label for="requesterName">Requisitante</label>
+              <input
+                id="requesterName"
+                pInputText
+                formControlName="requesterName"
+              />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" pInputText formControlName="email" />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="field">
+              <label for="phone">Celular</label>
+              <input id="phone" pInputText formControlName="phone" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field p-fluid">
+          <label for="description">Descrição</label>
+          <textarea
+            id="description"
+            pInputTextarea
+            formControlName="description"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <!-- Campos abaixo só aparecem se estiver editando um ticket -->
+        <div *ngIf="ticketId" class="grid p-fluid">
+          <div class="col-3" *ngIf="ticketId && !ticketForm.get('startDate')?.value">
+            <p-button
+              label="Iniciar Atendimento"
+              icon="pi pi-play"
+              (click)="startTicket()"
+            >
+            </p-button>
+          </div>
+
+          <div class="col-3" *ngIf="ticketId && ticketForm.get('startDate')?.value && !ticketForm.get('endDate')?.value">
+            <p-button
+              label="Encerrar Atendimento"
+              icon="pi pi-stop"
+              severity="danger"
+              (click)="stopTicket()"
+            >
+            </p-button>
+          </div>
+
+          <div class="col-9" *ngIf="ticketId && !ticketForm.get('endDate')?.value"></div>
+
+          <div class="col-3">
+            <div class="field" formGroupName="user">
+              <label for="userName">Atendente</label>
+              <input id="userName" pInputText formControlName="name" />
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="field">
+              <label for="status">Status</label>
+              <input
+                id="status"
+                pInputText
+                formControlName="status"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="field">
+              <label for="startDate">Data de Início</label>
+              <p-calendar
+                id="startDate"
+                formControlName="startDate"
+                dateFormat="dd/mm/yy"
+                [showTime]="true"
+                [showIcon]="true"
+              ></p-calendar>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="field">
+              <label for="endDate">Data de Fim</label>
+              <p-calendar
+                id="endDate"
+                formControlName="endDate"
+                dateFormat="dd/mm/yy"
+                [showTime]="true"
+                [showIcon]="true"
+              ></p-calendar>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="ticketId" class="field p-fluid">
+          <label for="resolution">Tratativa</label>
+          <textarea
+            id="resolution"
+            pInputTextarea
+            formControlName="resolution"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="flex justify-content-between align-items-center mb-2">
+          <p-button
+            label="Voltar"
+            icon="pi pi-arrow-left"
+            [routerLink]="[
+              this.currentUrl.includes('/panel') ? '/panel/tickets' : '/'
+            ]"
+            severity="secondary"
+          ></p-button>
+
+          <p-button type="submit" label="Salvar" icon="pi pi-save"></p-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

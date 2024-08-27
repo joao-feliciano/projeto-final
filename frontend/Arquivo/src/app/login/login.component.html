@@ -1,0 +1,56 @@
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <div class="flex flex-column align-items-center justify-content-center">
+                  
+    <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+      <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+        <div class="text-center mb-3">
+          <img src="assets/layout/images/logo-dark.png" alt="Saltos" class="mb-5 w-6rem flex-shrink-0">  
+          <div class="text-900 text-3xl font-medium mb-3">Área do colaborador</div>
+          <span class="text-600 font-medium">Faça login para continuar</span>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <div class="form-group mb-3">
+            <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+            <input 
+              pInputText
+              id="email" 
+              type="email" 
+              formControlName="email" 
+              class="form-control w-full md:w-30rem" 
+              placeholder="Insira seu email" 
+                >
+            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message text-red-600 mt-2">
+              Por favor insira um email válido
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
+            <input
+              pInputText
+              id="password" 
+              formControlName="password" 
+              placeholder="Enter your password" 
+              class="form-control w-full md:w-30rem" 
+              type="password"
+             >
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message text-red-600 mt-2">
+              Senha é necessária
+            </div>
+          </div>
+
+          <button type="submit" pButton pRipple label="Sign In" class="w-full" [disabled]="loginForm.invalid"></button>
+
+          <div class="text-center mt-3">
+            <button pButton pRipple label="Registrar-se" class="w-full p-button-danger" [routerLink]="['/register/']"></button>
+          </div>
+
+          <div class="text-center mt-3">
+            <button pButton pRipple label="Home" class=" p-button-secondary" [routerLink]="['/']"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
